@@ -1,1 +1,2 @@
-import ES6 from '../01ES6'
+import '../01ES6'
+import '../02proto'
