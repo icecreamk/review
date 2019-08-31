@@ -2,3 +2,16 @@
     "presets": ["es2015", "latest"],
     "plugins": []
 }
+
+// {
+//     "presets": [
+//         [
+//             "latest", {
+//                 "es2015": {
+//                     "modules": false // 忽略第三方插件，只编译自身写的代码
+//                 }
+//             }
+//         ]
+//     ],
+//     "plugins": ["external-helpers"]
+// }
