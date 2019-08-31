@@ -26,7 +26,7 @@ class Animal_c{
 }
 class Dog_c extends Animal_c{ // 使用extends关键字继承，需super(props)继承属性
     constructor(){
-        super()
+        super() // 注意：子类的构造函数需要写上super
     }
     bark(){
         console.log('bark')

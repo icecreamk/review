@@ -34,6 +34,10 @@
 
 ## class 与 普通构造函数
 
+### 区别
+* class在语法上更加贴合面向对象的写法
+* class实现继承更加易读，易理解
+
 ### 普通构造函数
 * function Math
 * Math.prototype.add
@@ -83,10 +87,28 @@
 * new Promise传入函数，带有resolve reject 参数
 * then 接收结果
 
-## 其他
+## 其他常用语法
 * let/const
 * 多行字符串/模版变量``
 * 解构赋值
 * 块级作用域
 * 函数默认参数
 * 箭头函数，及其this指向
+
+```
+function fn() {
+    console.log(this); // obj
+    const a = [1,2,3]
+
+    a.forEach(function(){
+        console.log(this) // window
+    });
+
+    a.forEach(() => {
+        console.log(this) // obj
+    })
+}
+
+const obj = {name: 'kkk'}
+fn.call(obj)
+```
