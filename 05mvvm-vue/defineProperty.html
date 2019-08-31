@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Object.defineProperty</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <script type="text/javascript">
+
+        // 使用defineProperty操作
+        var obj = {}
+        var _name = 'zhangsan'
+        Object.defineProperty(obj, 'name', {
+            get: function () {
+                console.log('get', _name) // 监听取值
+                return _name
+            },
+            set: function (newVal) {
+                console.log('set', newVal)  // 监听赋值
+                _name = newVal
+            }
+        })
+
+        // 模拟Vue实现机制
+        // defineProperty监听，代理到vm上
+
+        var vm = {}
+        var data = {
+            name: 'zhangsan',
+            age: 20
+        }
+
+        var key, value
+        for (key in data) {
+            (function (key) {
+                Object.defineProperty(vm, key, {
+                    get: function () {
+                        console.log('get', data[key]) // 监听
+                        return data[key]
+                    },
+                    set: function (newVal) {
+                        console.log('set', newVal) // 监听
+                        data[key] = newVal
+                    }
+                })
+            })(key)
+        }
+
+    </script>
+</body>
+</html>
