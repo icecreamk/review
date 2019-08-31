@@ -1,14 +1,54 @@
 # async 异步
 
 ## 单线程和异步
-* 单线程：一个线程，同一时间只能做一件事
+* 单线程：一个线程，同一时间只能做一件事（两句js不能同时执行）
 * 原因：避免DOM渲染的冲突
 * 解决方案： 异步
 
-## event-loop 事件轮询
+### DOM渲染的冲突
+* 浏览器需要渲染DOM
+* js可以修改DOM
+* 若浏览器和js共用一个线程，则DOM会冲突，故js执行时，dom暂停渲染，反之同理
+* 两段js若同时修改dom则dom会冲突，故js单线程
+* webworker支持多线程，但他不能访问dom，也就不存在dom渲染冲突
+
+### 异步虽然解决单线程但也存在的问题
+* 没按照书写顺序执行，可读性差
+* callback中不容易模块化
+
+
+
+## event-loop 事件轮循（一直循环监听异步队列中是否内容需要执行）
 * 同步代码直接执行
 * 异步代码放在异步队列中
-* 待同步代码执行完毕，轮询监听执行异步队列中的代码
+* 待同步代码执行完毕，论循监听执行异步队列中的代码
+* 事件轮循是js异步的解决方案
+
+### 示例
+``` javascript
+
+$.ajax({
+    url: 'xxx',
+    success: function() {
+        console.log(1)
+    }
+})
+
+// 100毫秒后放入异步队列中
+setTimeout(function() {
+    console.log(2)
+}, 100)
+
+// 立刻放入异步队列中
+setTimeout(function() {
+    console.log(3)
+})
+console.log(4)
+
+// => 4 3 1 2 或 4 3 2 1 (取决于ajax请求是否在100毫秒之内)
+// 若ajax请求的是本地文件，也有可能1在3之前
+```
+
 
 ## jQuery Deferred
 
@@ -27,17 +67,20 @@
 * promise.then()
 
 ## Promise
+* 改变不了JS单线程、异步的本质（只是将callback链式串起来）
 
 ### 语法
 * new Promise((resolve, reject) => {}).then()
 * Promise.all([]).then(datas)
 * Promise.race([]).then(data)
 
+### 异常捕获
+* 规定：then只接收一个参数，最后同一用catch捕获异常（reject和throw error）
+
 ### 标准-状态
 * 三种状态：pending、fulfilled、rejected
 * 初始状态是pending
-* pending => fulfilled，pending => rejected
-* 状态变化不可逆
+* pending => fulfilled，pending => rejected（状态变化不可逆）
 
 ### 标准-then
 * Promise 实例必须实现then方法
@@ -54,10 +97,10 @@
 * 需要babel-polyfill，async是ES7提案，并未标准化
 * 使用Promise，但并不和Promise冲突
 * 同步写法，无回调函数
-* 改变不了JS单线程、异步但本质
+* 改变不了JS单线程、异步的本质
 
 ## Generator
 * 新语法，和编辑器相关，原理较为复杂，成本高
-* 不是针对异步提出但功能，不是异步但直接替代方案
+* 不是针对异步提出但功能，不是异步但直接替代方案（不是用来支持异步）
 * 有更好简洁的解决方案，如async/await
 * koa也从Generator解决异步，转向支持async/await
