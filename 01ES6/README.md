@@ -1,11 +1,11 @@
 # ES6
 
-## export
+## 模块化(export)
 * export default xx 导出默认，使用 import xx
 * export xx or export { xx }，使用 import { xx }
 
 ## babel
-* npm i -g babel-cli
+* npm i -g babel-cli (执行`babel ./xx`命令可以在控制台中输出编译的js文件)
 * npm i -S-D babel-core babel-preset-es2015 babel-preset-latest
 * babel --version
 * /.babelrc
@@ -13,13 +13,18 @@
 
 ## webpack
 * npm i -S-D webpack babel-loader
-* /webpack.config.js
-* package.json/script.dev
+* /webpack.config.js (如果将配置文件重命名为webpack.dev.config.js，则直接执行默认的webpack命令则会找不到相应的配置文件，需要借助于webpack的--config选项来指定配置文件)
+* package.json/scripts.dev
+* npm run dev
+* 打包后的代码包含webpack自身的和项目的
 
 ## rollup
+* npm i rollup rollup-plugin-node-resolve rollup-plugin-babel babel-plugin-external-helpers babel-preset-latest -D
+* /.babelrc
 * /rollup.config.js
 * rollup功能单一，打包模块化；webpack功能强大
 * 工具尽量职能单一，可集成，可扩展
+* 打包后的代码只有项目的，较webpack简洁
 
 ## 模块化标准
 * 无模块化
@@ -28,6 +33,10 @@
 * ES6愿景统一模块化标准
 
 ## class 与 普通构造函数
+
+### 区别
+* class在语法上更加贴合面向对象的写法
+* class实现继承更加易读，易理解
 
 ### 普通构造函数
 * function Math
@@ -78,10 +87,28 @@
 * new Promise传入函数，带有resolve reject 参数
 * then 接收结果
 
-## 其他
+## 其他常用语法
 * let/const
 * 多行字符串/模版变量``
 * 解构赋值
 * 块级作用域
 * 函数默认参数
 * 箭头函数，及其this指向
+
+```
+function fn() {
+    console.log(this); // obj
+    const a = [1,2,3]
+
+    a.forEach(function(){
+        console.log(this) // window
+    });
+
+    a.forEach(() => {
+        console.log(this) // obj
+    })
+}
+
+const obj = {name: 'kkk'}
+fn.call(obj)
+```
