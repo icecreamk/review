@@ -9,11 +9,14 @@
 ## dom形式
 
 ### 真实 dom
+```
 <ul id="list">
     <li class="item">item</li>
 </ul>
+```
 
 ### virtual dom
+```
 {
     tag: 'ul',
     attrs: { id: 'list'},
@@ -23,6 +26,7 @@
         children: ['item']
     }]
 }
+```
 
 ## snabbdom
 * h(tag, {attrs}, [children]) // 生成vnode节点
