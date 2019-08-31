@@ -43,3 +43,21 @@
 * Promise 实例必须实现then方法
 * then()必须接受两个函数作为参数
 * promise.then()返回的必须是一个Promise实例，若无明码return新实例，则默认返回原promise实例
+
+## async/await
+
+* (async function(){
+    result = await promise()
+})()
+* 使用await，函数必须用async标识
+* await后是Promise实例
+* 需要babel-polyfill，async是ES7提案，并未标准化
+* 使用Promise，但并不和Promise冲突
+* 同步写法，无回调函数
+* 改变不了JS单线程、异步但本质
+
+## Generator
+* 新语法，和编辑器相关，原理较为复杂，成本高
+* 不是针对异步提出但功能，不是异步但直接替代方案
+* 有更好简洁的解决方案，如async/await
+* koa也从Generator解决异步，转向支持async/await
