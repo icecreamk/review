@@ -20,8 +20,8 @@
 
 ## Vue三要素
 * 响应式：defineProperty监听、vm代理data属性
-* 模版引擎：
-* 渲染：
+* 模版解析：模版解析成render函数
+* 渲染：render将vdom渲染Dom
 
 ### 响应式
 
@@ -39,3 +39,85 @@
 * 通过vm or this操作data属性
 
 ### 模版解析
+#### 模版
+* 本质：字符串
+* 有逻辑语句，有变量，如v-if等
+* 与html格式很像，但有很大区别
+* 最终转换成html显示
+* 模版必须转换成JS代码，因为：
+    * 有逻辑只有JS才能处理（图灵完备语言）
+    * 要转换为html渲染页面，必须用JS才能实现
+    * 因此模版最终要通过JS函数（render函数）转换
+
+### 渲染
+
+#### render函数
+
+##### with用法
+* console.log(obj.name) === with(obj){ console.log(name) }
+* render函数中使用，开发中尽量避免使用with
+
+##### render
+```
+<div id="app">
+    <p>{{name}}</p>
+</div>
+```
+<==>
+```
+render(){
+    with(this){
+        return _c(
+            'div',
+             { attrs: {'id': 'app}},
+            [
+                _c('p',[_v(_s(name))])
+            ]
+        )
+    }
+}
+```
+* 模版中信息都包含在render函数中
+* this即vm
+* name == this.name == vm.name == data中name
+* 模版中的data的属性，都变成了JS变量
+* 模版中的v-model v-on等变成了JS逻辑
+* render函数执行返回vnode
+
+##### render与vdom
+* updateComponent实现了vdom的patch
+* 页面首次渲染执行updateComponent
+* data中属性修改，执行updateComponent
+
+## Vue实现流程
+* 解析模版成render函数
+    * with用法
+    * 模版中信息都包含在render函数中
+    * 模版中的data的属性，都变成了JS变量
+    * 模版中的v-model v-on等变成了JS逻辑
+    * render函数执行返回vnode
+* 响应式开始监听
+    * Object.defineProperty
+    * data属性被代理到vm上
+* 首次渲染显示页面，绑定依赖
+    * 初次渲染，执行updateComponent，执行vm._render
+    * 执行render，会访问到data属性
+    * data属性访问会被响应式到get方法监听到（为何监听get？）
+        * data中属性不一定全被使用到
+        * 只有被用到的才会调用到get
+        * set时只需要关心调用到get的属性
+        * 避免不必要的重复渲染
+    * 执行updateComponent，执行vdom的patch方法
+    * patch将vnode渲染成Dom，初次渲染完成
+* data属性变化，触发rerender
+    * 修改属性，被响应式的set监听到
+    * set中执行updateComponent
+    * updateComponent重新执行vm._render
+    * 生成的vnode通过patch对比prevVnode，渲染Dom
+
+## 问题总结
+* 使用jQuery与使用框架的区别
+* 对MVVM的理解
+* vue中如何实现响应式
+* vue中如何解析模版
+* vue的整体实现流程
