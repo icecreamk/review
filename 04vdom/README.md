@@ -2,11 +2,12 @@
 
 ## 虚拟 dom
 * 避免操作DOM
-* 用JS模拟DOM结构
+* 用JS模拟的DOM结构
 * DOM变化的对比，在JS层处理
 * 提高重绘性能
 
 ## dom形式
+* 尽量在js中操作DOM，最后再一次性append到页面中
 
 ### 真实 dom
 ```
@@ -42,3 +43,4 @@
 * 用虚拟vDom生成真实Dom节点
 * 数据发生变化时，生成新的虚拟vDom
 * 递归比对新的vDom与原vDom的区别，操作真实Dom替换掉不同的节点
+* 核心逻辑：createElement、updateChildren
