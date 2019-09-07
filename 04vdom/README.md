@@ -29,13 +29,13 @@
 }
 ```
 
-## snabbdom
+## snabbdom(虚拟的dom库)
 * h(tag, {attrs}, [children]) // 生成vnode节点
 * patch(vnode, newVnode) // dom节点对比、渲染
 
 ## diff算法
 * linux基础命令，对比文件内容变化
-* vDom中应用diff算法为了查找出需要更新的节点
+* diff算法是找出vDom中需要更新的节点(避免大量的dom更新，dom更新是昂贵的)
 * 依据patch(vnode, newVnode)对比出不同的节点并进行替换更新
 
 ## diff基本实现流程
