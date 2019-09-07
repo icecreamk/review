@@ -113,7 +113,7 @@ render(){
     * patch将vnode渲染成Dom，初次渲染完成
 * data属性变化，触发rerender
     * 修改属性，被响应式的set监听到
-    * set中执行updateComponent
+    * set中执行updateComponent（异步）
     * updateComponent重新执行vm._render
     * 生成的vnode通过patch对比prevVnode，渲染Dom
 
