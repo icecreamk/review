@@ -23,11 +23,11 @@
 
 ## Vue三要素(MVVM的三要素)
 * 响应式（vue如何监听到data的变化）
- - defineProperty监听、vm代理data属性
+    - defineProperty监听、vm代理data属性
 * 模版解析(vue的模板如何被解析，指令如何处理)
- - 模版解析成render函数
+    - 模版解析成render函数
 * 渲染（vue的模板如何被渲染成真实的html，以及渲染过程）
- - render将vdom渲染Dom
+    - render将vdom渲染Dom
 
 ### 响应式
 

@@ -73,7 +73,7 @@ console.log(4)
 * Promise.race([]).then(data)
 
 ### 异常捕获
-* 规定：then只接收一个参数，最后同一用catch捕获异常（reject和throw error）
+* 规定：then只接收一个参数，最后统一用catch捕获异常（reject和throw error）
 
 ### 标准-状态
 * 三种状态：pending、fulfilled、rejected
